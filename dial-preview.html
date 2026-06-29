@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Honeycomb — family dial concept</title>
+<style>
+  :root{--nn:#F3D600;--ink:#1a1a1a;--muted:#5a5a5a;--line:#e4e2d8;--soft:#faf9f3;--surface:#fff;
+        --red:#e0492f;--amber:#e08a2b;--green:#46a24a;
+        --font:'Source Sans Pro','Segoe UI',system-ui,-apple-system,Arial,sans-serif;}
+  *{box-sizing:border-box;}
+  body{margin:0;background:#faf9f4;color:var(--ink);font-family:var(--font);padding:24px;line-height:1.5;}
+  .wrap{max-width:760px;margin:0 auto;}
+  .nav{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;font-size:.85rem;}
+  .nav a{color:#1a1a1a;text-decoration:none;border:1px solid #cfccbf;padding:6px 13px;border-radius:20px;background:#fff;}
+  .nav a.cur{background:var(--nn);border-color:#d9c000;font-weight:600;}
+  .hdr{border-bottom:4px solid var(--nn);padding-bottom:12px;margin-bottom:18px;}
+  .pill{display:inline-block;background:var(--ink);color:#fff;font-size:.66rem;letter-spacing:.06em;text-transform:uppercase;padding:3px 9px;border-radius:20px;margin-bottom:8px;}
+  h1{font-size:1.5rem;margin:0 0 2px;}
+  .sub{color:var(--muted);margin:0;}
+  .panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px;margin-top:18px;}
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
+  .gauge{text-align:center;}
+  .gauge .cap{font-weight:600;font-size:.92rem;margin-top:-6px;}
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:18px;font-size:.86rem;color:var(--muted);}
+  .legend span{display:inline-flex;align-items:center;gap:7px;}
+  .dot{width:12px;height:12px;border-radius:50%;display:inline-block;}
+  .barline{width:14px;height:3px;background:var(--ink);display:inline-block;}
+  .note{font-size:.85rem;color:var(--muted);margin-top:16px;}
+  @media(max-width:520px){.grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="nav">
+    <a href="./index.html">Play the prototype</a>
+    <a href="./dial-preview.html" class="cur">Dial concept</a>
+    <a href="./Honeycomb_Trainers_Guide.html">Trainer's guide</a>
+    <a href="./Honeycomb_Marketing_OnePager.html">Marketing one-pager</a>
+  </nav>
+
+  <div class="hdr">
+    <span class="pill">Component concept · nnherit Dynamics</span>
+    <h1>The family dial</h1>
+    <p class="sub">A radial-gauge take on the four family dials, instead of the flat bars in the current prototype. Shown in a sample mid-game reading.</p>
+  </div>
+
+  <div class="panel">
+    <div class="grid" id="grid"></div>
+    <div class="legend">
+      <span><span class="dot" style="background:var(--red)"></span>At risk</span>
+      <span><span class="dot" style="background:var(--amber)"></span>Watch</span>
+      <span><span class="dot" style="background:var(--green)"></span>On track</span>
+      <span><span class="barline"></span>Target line</span>
+    </div>
+  </div>
+
+  <p class="note">Each dial runs from −6 to +6 with the target line at +2. The needle shows where the family currently sits as cards and chance events move the score. This is a visual concept for the physical and on-screen component — colours and range are easy to tune.</p>
+</div>
+
+<script>
+const THR=2, VMIN=-6, VMAX=6;
+function pt(cx,cy,R,deg){const a=deg*Math.PI/180;return [cx+R*Math.cos(a), cy-R*Math.sin(a)];}
+function ang(v){return 180-((v-VMIN)/(VMAX-VMIN))*180;}
+function arc(cx,cy,R,a1,a2){const p1=pt(cx,cy,R,a1),p2=pt(cx,cy,R,a2);return `M${p1[0].toFixed(1)} ${p1[1].toFixed(1)} A ${R} ${R} 0 0 1 ${p2[0].toFixed(1)} ${p2[1].toFixed(1)}`;}
+function colorFor(v){return v>=THR?'#46a24a':(v>=-2?'#e08a2b':'#e0492f');}
+function gauge(v,label){
+  const cx=90,cy=96,R=66,sw=15;
+  const aR=ang(-2), aA=ang(THR);
+  const tk1=pt(cx,cy,R-11,aA), tk2=pt(cx,cy,R+11,aA);
+  const nd=pt(cx,cy,R-14,ang(Math.max(VMIN,Math.min(VMAX,v))));
+  const col=colorFor(v);
+  return `<div class="gauge"><svg viewBox="0 0 180 124" width="100%" style="max-width:230px" role="img" aria-label="${label}: ${v>0?'+':''}${v}">
+    <path d="${arc(cx,cy,R,180,aR)}" fill="none" stroke="#e0492f" stroke-width="${sw}"/>
+    <path d="${arc(cx,cy,R,aR,aA)}" fill="none" stroke="#e08a2b" stroke-width="${sw}"/>
+    <path d="${arc(cx,cy,R,aA,0)}" fill="none" stroke="#46a24a" stroke-width="${sw}"/>
+    <line x1="${tk1[0].toFixed(1)}" y1="${tk1[1].toFixed(1)}" x2="${tk2[0].toFixed(1)}" y2="${tk2[1].toFixed(1)}" stroke="#1a1a1a" stroke-width="3"/>
+    <line x1="${cx}" y1="${cy}" x2="${nd[0].toFixed(1)}" y2="${nd[1].toFixed(1)}" stroke="#1a1a1a" stroke-width="3.5" stroke-linecap="round"/>
+    <circle cx="${cx}" cy="${cy}" r="8" fill="#1a1a1a"/>
+    <circle cx="${cx}" cy="${cy}" r="3.4" fill="#F3D600"/>
+    <text x="${cx}" y="58" text-anchor="middle" font-family="${'Source Sans Pro,Segoe UI,sans-serif'}" font-size="22" font-weight="700" fill="${col}">${v>0?'+':''}${v}</text>
+  </svg><div class="cap">${label}</div></div>`;
+}
+const DATA=[['Profitability',3],['Harmony',-1],['Continuity',2],['Readiness',-4]];
+document.getElementById('grid').innerHTML=DATA.map(d=>gauge(d[1],d[0])).join('');
+</script>
+</body>
+</html>

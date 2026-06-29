@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Honeycomb — Trainer's Guide (nnherit Dynamics)</title>
+<style>
+  :root{--yellow:#F3D600;--ink:#141414;--muted:#5b5b5b;--line:#e5e3d9;--soft:#faf9f3;--chip:#f4f0db;--d1:#e0492f;--d2:#e08a2b;--d3:#d9bd25;--d4:#46a24a;}
+  *{box-sizing:border-box;}
+  body{font-family:'Source Sans Pro','Segoe UI',system-ui,-apple-system,Arial,sans-serif;color:var(--ink);margin:0;line-height:1.55;}
+  .wrap{max-width:880px;margin:0 auto;padding:44px 30px 80px;}
+  header.top{border-bottom:4px solid var(--yellow);padding-bottom:16px;margin-bottom:6px;}
+  .pill{display:inline-block;background:var(--ink);color:#fff;font-size:.66rem;letter-spacing:.07em;text-transform:uppercase;padding:4px 10px;border-radius:20px;margin-bottom:8px;}
+  h1{font-size:1.85rem;margin:0 0 4px;}
+  .sub{color:var(--muted);margin:0;font-size:1.02rem;}
+  h2{font-size:1.28rem;margin:40px 0 6px;padding-top:12px;border-top:1px solid var(--line);}
+  h3{font-size:1.05rem;margin:22px 0 4px;}
+  p{margin:8px 0;}
+  .lead{color:var(--muted);}
+  .box{background:var(--soft);border:1px solid var(--line);border-left:6px solid var(--yellow);padding:14px 18px;border-radius:8px;margin:16px 0;}
+  table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.92rem;}
+  th,td{border:1px solid var(--line);padding:9px 11px;text-align:left;vertical-align:top;}
+  thead th{background:var(--ink);color:#fff;font-weight:600;font-size:.85rem;}
+  tbody th{background:var(--chip);font-weight:700;white-space:nowrap;}
+  ul,ol{margin:8px 0;padding-left:22px;}
+  li{margin:4px 0;}
+  .dimrow{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0;}
+  .dim{flex:1 1 180px;background:var(--soft);border:1px solid var(--line);border-radius:8px;padding:10px 12px;}
+  .dim b{display:block;}
+  .swatch{display:inline-block;width:11px;height:11px;border-radius:50%;vertical-align:middle;margin-right:6px;}
+  .note{font-size:.85rem;color:var(--muted);}
+  footer{margin-top:40px;padding-top:16px;border-top:4px solid var(--yellow);color:var(--muted);font-size:.88rem;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <span class="pill">nnherit Dynamics · Trainer's guide · Working draft</span>
+    <h1>The Honeycomb</h1>
+    <p class="sub">A facilitated, half-day succession session built on the Succession Dynamics deck. Working title — mechanics for the first test run.</p>
+  </header>
+
+  <div class="box">
+    <strong>What this is.</strong> A guide for the coach, consultant or adviser running The Honeycomb. It covers what the session is for, what's in the kit, the rules and scoring, and a minute-by-minute flow. The Honeycomb is a new tool concept, not a finished product — treat this as the script for a test run, not a fixed rulebook.
+  </div>
+
+  <h2>What it's for</h2>
+  <p>Family businesses rarely struggle for want of a succession framework. They struggle to make the handover discussable — to sequence it, name the risks, and talk about founder control, readiness and timing without the conversation turning personal. The Honeycomb gives a family a shared object to work on instead of each other. Players build a complete honeycomb out of real succession scenarios, watch the effect on four family dials, absorb a few unpredictable events, and leave with a transition roadmap they wrote themselves.</p>
+  <p class="lead">It is cooperative by design. The family plays against the scenario, not against each other. There are no winners, no losers, and no forced decision about who succeeds.</p>
+
+  <h2>Who runs it, and for whom</h2>
+  <ul>
+    <li><strong>Facilitator:</strong> a coach, consultant, family-business adviser or educator. The tool supports the facilitator — it does not replace facilitation.</li>
+    <li><strong>Participants:</strong> a founder plus next generation, a sibling group, or a small family-and-adviser group. Best at 3–7 people.</li>
+    <li><strong>Setting:</strong> a half-day working session. A full-day variation is noted at the end.</li>
+  </ul>
+
+  <h2>What's in the kit</h2>
+  <table>
+    <thead><tr><th>Component</th><th>Status</th><th>Role in play</th></tr></thead>
+    <tbody>
+      <tr><th>The Honeycomb mat</th><td>New</td><td>A board of 13 hex slots forming a complete honeycomb, with a central <em>Legacy Core</em>. The shape is only finished when every slot is filled.</td></tr>
+      <tr><th>Succession Dynamics deck</th><td>Existing</td><td>The 60 hexagonal scenario cards. Each carries a challenge category, a difficulty rating (1–4) and impact scores. They drop straight into the hex slots.</td></tr>
+      <tr><th>Four family dials</th><td>New</td><td>Shared trackers for Profitability, Harmony, Continuity and Readiness. They move as cards are placed.</td></tr>
+      <tr><th>Chance deck</th><td>New</td><td>Unpredictable events that swing a dial and force the family to adapt the plan.</td></tr>
+      <tr><th>Roadmap capture sheet</th><td>New</td><td>Where the finished board is written up as a transition roadmap and next move.</td></tr>
+    </tbody>
+  </table>
+  <p class="note">Test-run simplification: the prototype uses a curated subset of the deck and dials four of the deck's eight scored dimensions (Profitability, Harmony, Continuity, Readiness). Family, External, Communication and Governance impacts still appear on the cards for discussion, but are not tracked on a dial yet.</p>
+
+  <h2>The four family dials</h2>
+  <p>Each scenario card carries impact scores. As cards go onto the board, those scores add up on four shared dials. The family's shared goal is a completed honeycomb with all four dials above the agreed line.</p>
+  <div class="dimrow">
+    <div class="dim"><b>Profitability</b>Can the business keep performing through the handover?</div>
+    <div class="dim"><b>Harmony</b>Are family relationships holding?</div>
+    <div class="dim"><b>Continuity</b>Is the enterprise set up to carry forward?</div>
+    <div class="dim"><b>Readiness</b>Is the next generation ready to lead?</div>
+  </div>
+  <p class="note">Difficulty colours follow the deck:
+    <span class="swatch" style="background:var(--d1)"></span>red = 1,
+    <span class="swatch" style="background:var(--d2)"></span>orange = 2,
+    <span class="swatch" style="background:var(--d3)"></span>yellow = 3,
+    <span class="swatch" style="background:var(--d4)"></span>green = 4. Lower numbers are sharper, harder situations; greens tend to be the resolutions.</p>
+
+  <h2>Core rules</h2>
+  <ol>
+    <li><strong>Build outward from the Legacy Core.</strong> Place scenario cards into empty hexes, working out from the centre.</li>
+    <li><strong>Talk before you place.</strong> A card only goes down once the group has said why it belongs there and what it would mean for the family.</li>
+    <li><strong>Watch the dials.</strong> Every placement moves the four shared dials. Problems (reds and oranges) pull them down; resolutions (greens) lift them.</li>
+    <li><strong>Weather the chance cards.</strong> At set points, draw a chance card. It swings a dial and the family adapts — replacing, re-sequencing, or strengthening their plan.</li>
+    <li><strong>Finish the shape.</strong> The session resolves when the honeycomb is complete and the family reads where the dials have landed.</li>
+  </ol>
+  <div class="box">
+    <strong>The point of the dials is the conversation, not the score.</strong> A number going down is a prompt to ask "what would protect this?" — not a failure. Keep the family's attention on what each placement reveals.
+  </div>
+
+  <h2>Session flow — half day (about 3 hours 30)</h2>
+  <table>
+    <thead><tr><th>Phase</th><th>Time</th><th>What happens</th></tr></thead>
+    <tbody>
+      <tr><th>1. Welcome &amp; ground rules</th><td>20 min</td><td>Set the contract: this is cooperative, nothing leaves the room, no decision is forced today. Agree how the family will flag if something gets too close.</td></tr>
+      <tr><th>2. Frame the board</th><td>15 min</td><td>Introduce the Legacy Core, the four dials, and what "good" looks like on each. Let the family set the line they want to clear.</td></tr>
+      <tr><th>3. Surface the challenges</th><td>40 min</td><td>Working from the deck, the family places the scenarios that feel true to their situation. Reds and oranges will pull the dials down — that's expected. Name what each one really is.</td></tr>
+      <tr><th>4. First chance round</th><td>20 min</td><td>Draw one or two chance cards. The family sees what an external shock does to a fragile plan, and adapts.</td></tr>
+      <tr><th>5. Build the resolutions</th><td>45 min</td><td>Now place the moves that recover the dials — phased transitions, clearer mandates, open conversations. The honeycomb fills outward.</td></tr>
+      <tr><th>6. Complete the shape</th><td>20 min</td><td>Fill the final hexes. Read where the four dials have settled. If one is still at risk, the family chooses one more move.</td></tr>
+      <tr><th>7. Roadmap &amp; debrief</th><td>40 min</td><td>Write the finished board up as a transition roadmap, in board order. Debrief: what surprised us, what we avoided naming before, what is now sayable.</td></tr>
+      <tr><th>8. Close &amp; next move</th><td>15 min</td><td>Agree the single next conversation or action. End on something concrete and owned.</td></tr>
+    </tbody>
+  </table>
+
+  <h2>The chance mechanic</h2>
+  <p>Chance cards add luck and a little tension, and they do real facilitation work: they show a family that a succession plan has to survive events nobody chose. Examples in the test deck: <em>Market shock</em>, <em>Health event</em>, <em>Rival bid</em>, <em>Key person leaves</em>, <em>Family rift</em>, and a few positive turns such as <em>Unexpected windfall</em> and <em>Mentor steps in</em>. Each swings one or more dials. The facilitator decides when to draw — usually once the board feels settled and a little complacent.</p>
+
+  <h2>Facilitation principles</h2>
+  <ul>
+    <li><strong>Keep it cooperative.</strong> If anyone starts keeping personal score, bring the focus back to the shared dials and the board.</li>
+    <li><strong>Protect the founder.</strong> Founder-reluctance cards touch identity and control. Use the card and the scenario as the distance — discuss "this founder," then let the room bring it closer only if it's ready.</li>
+    <li><strong>Pace the exposure.</strong> You set the speed. Don't let the group surface more than it can hold in the time available.</li>
+    <li><strong>Make the output visible.</strong> A session that ends in "good conversation" but no written roadmap has under-delivered. The capture sheet is not optional.</li>
+    <li><strong>Debrief is where the learning lands.</strong> Leave real time for it. The board is the prompt; the debrief is the value.</li>
+  </ul>
+
+  <h2>What the family leaves with</h2>
+  <ul>
+    <li>A completed honeycomb — a visual map of their succession situation.</li>
+    <li>A written transition roadmap, in the order they worked through it.</li>
+    <li>A reading on four dimensions of where the handover currently stands.</li>
+    <li>One agreed next move.</li>
+  </ul>
+
+  <h2>Full-day variation</h2>
+  <p>For a full day, run two honeycombs — one for the problem as it stands, one for the family's preferred path — with a longer chance sequence between them, and a deeper debrief. This is also the natural bridge into the wider <em>Legacy Lab</em> journey, where succession is one territory among ownership, governance and renewal.</p>
+
+  <footer>
+    <p>Working draft for the first test run. Mechanics, timings and component list are provisional and meant to be revised after play. Built on the Succession Dynamics deck (nnherit Dynamics).</p>
+  </footer>
+
+</div>
+</body>
+</html>

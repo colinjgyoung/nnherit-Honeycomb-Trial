@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Honeycomb — nnherit interactive prototype</title>
+<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<div class="wrap">
+
+  <nav class="nav">
+    <a href="./index.html" class="cur">Play the prototype</a>
+    <a href="./dial-preview.html">Dial concept</a>
+    <a href="./Honeycomb_Trainers_Guide.html">Trainer's guide</a>
+    <a href="./Honeycomb_Marketing_OnePager.html">Marketing one-pager</a>
+  </nav>
+
+  <div class="hdr">
+    <span class="pill">Interactive prototype · nnherit Dynamics</span>
+    <h1>The Honeycomb</h1>
+    <p>A gamified succession session. Fill the honeycomb with scenario cards, watch the four family dials respond, weather the chance cards — then turn the board into a transition roadmap.</p>
+  </div>
+
+  <div class="layout">
+    <div class="col-board">
+      <h2>The board</h2>
+      <div class="hboard" id="board"></div>
+
+      <h2 style="margin-top:14px;">Family dials</h2>
+      <div class="dials" id="dials"></div>
+
+      <div class="ctrls">
+        <button class="act" id="chanceBtn">Draw chance card</button>
+        <button class="act primary" id="roadmapBtn" disabled>Generate roadmap</button>
+        <button class="act" id="resetBtn">Reset</button>
+      </div>
+      <div class="progress" id="progress"></div>
+      <div class="banner hidden" id="banner"></div>
+    </div>
+
+    <div class="col-tray">
+      <h2>Scenario cards <span style="font-weight:400;color:var(--text-secondary);font-size:.8rem;">— click one, then click a hex</span></h2>
+      <div class="tray" id="tray"></div>
+    </div>
+  </div>
+
+  <div class="roadmap hidden" id="roadmap"></div>
+
+  <p class="note">Prototype seeded with real Succession Dynamics card names and impact scores. Dials shown: Profitability, Harmony, Continuity, Readiness (cards may also carry Family / External / Communication impacts, shown on the card but not dialled in this demo).</p>
+</div>
+
+<script src="./script.js"></script>
+</body>
+</html>
