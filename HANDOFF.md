@@ -73,3 +73,15 @@ Grounded in family-business research and the nnherit brand:
 ## Related material
 
 The Honeycomb is the lead "big idea" from a wider nnherit playkit brainstorm (11 concept ideas + 5 gamified systems), chosen against a draft evaluation matrix. Those working documents and the Succession Dynamics source data live in nnherit's own project files, outside this repo.
+
+## Correction — difficulty is a 1–4 rating, colour = challenge (fix in code)
+
+The deck does **not** colour-code difficulty. On the final cards, **difficulty is a 1–4 rating** (a slider on the card back) and **colour identifies the challenge** (one colour per the five challenges). The current prototype (`script.js` / `style.css`) colours each hex red/orange/yellow/green **by difficulty** — that is the old, retired scheme. When the code is next worked on, change it so **hex colour encodes the challenge (VS/FR/SP/CT/RR)** and difficulty is shown as a 1–4 value. Note also: difficulty ≠ good/bad — the dials must move on each card's actual impact scores, never on its colour. (The trainer's guide and the checklist CSV have already been corrected; the master Excel in Drive still carries the legacy colour-difficulty columns.)
+
+## Developing with Claude Code
+
+- **Point Claude Code at this repo** (`nnherit Honeycomb Trial`) as its working folder — this is the code it edits and runs. Static site, no build, no dependencies; open `index.html` to run.
+- **It does not need the whole nnherit folder.** The one external input it needs is the **deck data**: `Succession_Dynamics_Card_Checklist.csv` (the corrected 60-card source). That currently lives in the nnherit workspace under `04_PRODUCTS_AND_PLAYFUL_OBJECTS/01_Succession_Dynamics_scenario_cards/`. Either copy it into a `/data` folder here (recommended, makes the repo self-contained) or give Claude Code read access to just that one folder.
+- **Optional context.** The nnherit workspace also holds the brand voice guide, the full integration recommendation (`Deck_Integration_Recommendation.md`), and the trainer's guide. Useful to keep work on-brand, but reference only — not required to build.
+- **Public-repo caveat.** This repo is public, so anything committed here — including the full deck data or card art — is visible to anyone. Before adding the real 60-card content, decide whether that's acceptable for a trial, or whether the repo should go private (GitHub Pages on a private repo needs a paid plan).
+- **First coding task** (see the recommendation for detail): swap the 15 invented sample cards for the real 60 from the CSV; then the two-master-meter dials and front/back flip; then challenge modes and real card art.
