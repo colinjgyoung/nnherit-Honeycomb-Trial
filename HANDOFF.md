@@ -19,47 +19,59 @@ Published and working. Pure static site — **no build step, no framework, no de
 
 | File | Purpose |
 |---|---|
-| `index.html` | The playable prototype (the homepage). Links `style.css` + `script.js`. Top nav links the other pages. |
+| `index.html` | The playable prototype (the homepage). Links `style.css` + `cards.js` + `script.js`. Top nav links the other pages. |
 | `style.css` | All styling for the prototype. |
-| `script.js` | All game logic and the card/chance data. |
-| `dial-preview.html` | **Concept only** — a radial-gauge version of the four dials. Self-contained; not wired into the live prototype. |
+| `cards.js` | Deck data: `DIMS`, `CHALLENGES`, the full 60-card `CARDS`, and the `CHANCE` deck. Generated from the Excel in `data/`. |
+| `script.js` | All game logic (board, tray, meters, modal, roadmap). |
+| `data/nnherit_situation_cards_content_all (2).xlsx` | Source spreadsheet for the 60-card deck. |
+| `dial-preview.html` | The radial-gauge design reference. **Adopted** — the live prototype uses this gauge for its two master meters. |
 | `Honeycomb_Trainers_Guide.html` | Facilitator guide: full mechanics, components, half-day run sheet, safety principles. Self-contained. |
 | `Honeycomb_Marketing_OnePager.html` | Marketing one-pager (pain + how it works), audience = facilitators. Self-contained. |
-| `Honeycomb_Prototype.html` | **Legacy / redundant** — superseded by `index.html`. Safe to delete. |
 | `README.md` | Leads with the live URL for easy copy-paste. |
+| `.claude/launch.json` | Dev-only: local static server config (`npx http-server` on port 8642) for previewing in Claude Code. |
 
 ## How the prototype works (mechanics)
 
 - Board = 13 hexes in rows `[2,3,3,3,2]`; the centre hex (index 6) is the locked **Legacy Core**. 12 placeable slots.
-- Click a scenario card in the tray, then click an empty hex to place it. Click a placed hex to return it.
-- Four dials (Profitability, Harmony, Continuity, Readiness) sum the impact scores of placed cards. Target line = **+2**.
-- "Draw chance card" applies a random event that swings the dials.
-- "Generate roadmap" (enabled when all 12 slots are filled) lists the scenarios in board order and reports where the dials landed.
+- Click a scenario card in the tray, then click an empty hex to place it. Click a placed hex to return it. The tray holds the **full 60-card deck**, filterable by challenge via chips; the **i** button on each card opens the card back (description, 1–4 difficulty slider, impact scores).
+- **Hex/card colour encodes the challenge** (one colour per the five challenges, defined in `CHALLENGES`); difficulty is shown as a 1–4 dot rating.
+- **Two master meters** (radial gauges, range **−24..+24**): the business meter sums Profitability + Continuity + External + Governance; the family meter sums Harmony + Family + Communication + Readiness. Per-dimension mini-bars (±12) sit under each gauge. All **8 scored dimensions** are tracked.
+- The **target line is adjustable** (default 0) — per the trainer's guide, the family sets the line they want to clear. Meter bands: green ≥ target, amber within 6 below, red beyond.
+- With real scores, most cards (difficulty 1–3) are net-negative challenges; only difficulty-4 cards can be net-positive. Boards usually land negative — by design, the roadmap turns the lowest dimensions into "priority areas", echoing the guide's "the point of the meters is the conversation, not the score."
+- "Draw chance card" applies a random event that swings one or more dimensions.
+- "Generate roadmap" (enabled when all 12 slots are filled) lists the scenarios in board order, reports both meters, and names the priority areas.
 - Full facilitation logic (timings, debrief, safety) is in `Honeycomb_Trainers_Guide.html`.
 
-## Data model (`script.js`)
+## Data model (`cards.js` = data, `script.js` = logic)
 
-- `CARDS`: `{ id, n (name), c (challenge category), d (difficulty 1–4), p, h, co, r (impacts on Profitability/Harmony/Continuity/Readiness), x (extra-dimension text, display only) }`
-- `CHANCE`: `{ n, t (label), p, h, co, r }`
-- Constants: `ROWS`, `CORE` (=6), `DIALS`, `THRESH` (=2).
-- Dial scaling in `script.js` (bars) maps value over **−12..+12**; the gauge concept in `dial-preview.html` uses **−6..+6**. **These must be unified if the gauge is adopted.**
+- `DIMS`: the 8 scored dimensions, keys `prof, cont, ext, gov, harm, fam, comm, read`.
+- `CHALLENGES`: the 5 challenges keyed `VS/FR/SP/CT/RR` with display name, full sheet name, colour, hex tint.
+- `CARDS`: 60 × `{ id, cat, n (name), d (difficulty 1–4), desc, im: {dim: score} }`.
+- `CHANCE`: `{ n, t (label), im: {dim: score} }`.
+- Constants in `script.js`: `ROWS`, `CORE` (=6), `METERS`, `VMIN/VMAX` (±24), `DMIN/DMAX` (±12); `target` is user-adjustable state.
+- Data note: the source sheet scores SP07 "Internal Resistance" with `-2 Employees` — a dimension that exists on no other card. Folded into Governance in `cards.js`; flag for the master sheet.
 
 ## Known simplifications / caveats
 
-- Only ~15 sample cards are seeded. The real Succession Dynamics deck is **60 hexagonal cards across 5 categories**; full content lives in an nnherit Google Drive spreadsheet, not in this repo.
-- Dials track **4 of the deck's 8 scored dimensions**. The others (Family, External, Communication, Governance) appear on card text but are not tracked on a dial.
-- The 13-hex board honours a loose "9–15 hexes" brief; it is **not a mathematically exact hexagon** (a true hex-of-hexes is 7 or 19). Geometry is a placeholder.
-- Two dial visual styles exist: flat **bars** (live, in `script.js`) and radial **gauges** (`dial-preview.html`, concept only).
+- The 13-hex board (12 slots + Legacy Core) is the settled trial geometry: it honours the "9–15 hexes" brief and fits the half-day run sheet. A true hex-of-hexes (7 or 19) was considered and rejected — 7 is too few for the session arc, 19 too many. Revisit only if the physical product dictates otherwise.
+- Card art, QR links, and challenge icons from the sheet are not yet used on screen.
+- Chance deck is still invented sample content (10 events), now spanning all 8 dimensions.
 
 ## Open decisions / next steps
 
-1. **Dial style** — adopt the radial gauge (`dial-preview.html`) in the live prototype, or keep bars? If adopting: port the gauge renderer into `script.js`'s `render()` (replace the `.dials` bar block) and unify the value range (−6..+6 vs −12..+12).
-2. **Board geometry** — settle final hex count/shape.
-3. **Dimensions** — decide which of the 8 impact dimensions the dials should track.
-4. **Real data** — replace the sample cards with the full 60-card deck and real impact scores from the source spreadsheet.
-5. **Copy to verify before external use** — the "currently in pilot" line on the one-pager, and the "57% — PwC NextGen Survey" figure. Confirm both are accurate.
-6. **Repo hygiene** — delete redundant `Honeycomb_Prototype.html`.
-7. **Naming** — "The Honeycomb" is a working title, not final.
+1. **Copy to verify before external use** — the "currently in pilot" line on the one-pager (only nnherit can confirm). The "57% — PwC Global NextGen Survey 2022" figure has been verified and the citation year added.
+2. **Naming** — "The Honeycomb" is a working title, not final.
+3. **Card art** — bring the real card icons/art into the tray and card-back modal.
+4. **Challenge modes** — e.g. a session preset that deals a subset of cards per challenge instead of the full open tray.
+
+### Resolved (July 2026)
+
+- Real 60-card deck imported (`cards.js`), colour = challenge, difficulty = 1–4 rating. ✔
+- Radial gauge adopted for two master meters; value range unified at −24..+24. ✔
+- All 8 dimensions tracked (4 per meter). ✔
+- Board geometry settled at 13 hexes for the trial. ✔
+- Legacy `Honeycomb_Prototype.html` deleted. ✔
+- Repo stays public with full deck content — approved by Colin, July 2026. ✔
 
 ## Design constraints (do not break)
 
@@ -74,14 +86,14 @@ Grounded in family-business research and the nnherit brand:
 
 The Honeycomb is the lead "big idea" from a wider nnherit playkit brainstorm (11 concept ideas + 5 gamified systems), chosen against a draft evaluation matrix. Those working documents and the Succession Dynamics source data live in nnherit's own project files, outside this repo.
 
-## Correction — difficulty is a 1–4 rating, colour = challenge (fix in code)
+## Correction — difficulty is a 1–4 rating, colour = challenge (DONE in code)
 
-The deck does **not** colour-code difficulty. On the final cards, **difficulty is a 1–4 rating** (a slider on the card back) and **colour identifies the challenge** (one colour per the five challenges). The current prototype (`script.js` / `style.css`) colours each hex red/orange/yellow/green **by difficulty** — that is the old, retired scheme. When the code is next worked on, change it so **hex colour encodes the challenge (VS/FR/SP/CT/RR)** and difficulty is shown as a 1–4 value. Note also: difficulty ≠ good/bad — the dials must move on each card's actual impact scores, never on its colour. (The trainer's guide and the checklist CSV have already been corrected; the master Excel in Drive still carries the legacy colour-difficulty columns.)
+The deck does **not** colour-code difficulty. On the final cards, **difficulty is a 1–4 rating** (a slider on the card back) and **colour identifies the challenge** (one colour per the five challenges). **The prototype now implements this**: hex/card colour encodes the challenge (VS/FR/SP/CT/RR via `CHALLENGES`), difficulty is a 1–4 dot rating, and the meters move only on impact scores. Note: the master Excel (including the copy in `data/`) still carries the legacy colour-difficulty columns ("Complexity (1-4) red 1, orange 2…", "Colour of card") — the import ignores them.
 
 ## Developing with Claude Code
 
 - **Point Claude Code at this repo** (`nnherit Honeycomb Trial`) as its working folder — this is the code it edits and runs. Static site, no build, no dependencies; open `index.html` to run.
-- **It does not need the whole nnherit folder.** The one external input it needs is the **deck data**: `Succession_Dynamics_Card_Checklist.csv` (the corrected 60-card source). That currently lives in the nnherit workspace under `04_PRODUCTS_AND_PLAYFUL_OBJECTS/01_Succession_Dynamics_scenario_cards/`. Either copy it into a `/data` folder here (recommended, makes the repo self-contained) or give Claude Code read access to just that one folder.
+- **Deck data is now in-repo**: `data/nnherit_situation_cards_content_all (2).xlsx` is the source; `cards.js` is the imported, cleaned result. No external nnherit-workspace input is required.
 - **Optional context.** The nnherit workspace also holds the brand voice guide, the full integration recommendation (`Deck_Integration_Recommendation.md`), and the trainer's guide. Useful to keep work on-brand, but reference only — not required to build.
-- **Public-repo caveat.** This repo is public, so anything committed here — including the full deck data or card art — is visible to anyone. Before adding the real 60-card content, decide whether that's acceptable for a trial, or whether the repo should go private (GitHub Pages on a private repo needs a paid plan).
-- **First coding task** (see the recommendation for detail): swap the 15 invented sample cards for the real 60 from the CSV; then the two-master-meter dials and front/back flip; then challenge modes and real card art.
+- **Public-repo status.** Colin approved keeping the repo public with the full deck content (July 2026).
+- **Done (July 2026)**: real 60 cards imported; two-master-meter radial gauges; card front/back detail view; challenge-colour scheme. **Next up**: challenge modes and real card art.

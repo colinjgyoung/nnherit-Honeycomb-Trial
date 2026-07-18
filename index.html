@@ -19,7 +19,7 @@
   <div class="hdr">
     <span class="pill">Interactive prototype · nnherit Dynamics</span>
     <h1>The Honeycomb</h1>
-    <p>A gamified succession session. Fill the honeycomb with scenario cards, watch the four family dials respond, weather the chance cards — then turn the board into a transition roadmap.</p>
+    <p>A gamified succession session. Fill the honeycomb with scenario cards from the full Succession Dynamics deck, watch the business and family meters respond, weather the chance cards — then turn the board into a transition roadmap.</p>
   </div>
 
   <div class="layout">
@@ -27,8 +27,11 @@
       <h2>The board</h2>
       <div class="hboard" id="board"></div>
 
-      <h2 style="margin-top:14px;">Family dials</h2>
+      <h2 style="margin-top:14px;">Business &amp; family meters</h2>
       <div class="dials" id="dials"></div>
+      <div class="tgt">Target line — the line the family agrees to clear:
+        <button class="tbtn" id="tgtMinus" aria-label="Lower target">−</button><b id="tgtVal">0</b><button class="tbtn" id="tgtPlus" aria-label="Raise target">+</button>
+      </div>
 
       <div class="ctrls">
         <button class="act" id="chanceBtn">Draw chance card</button>
@@ -40,16 +43,30 @@
     </div>
 
     <div class="col-tray">
-      <h2>Scenario cards <span style="font-weight:400;color:var(--text-secondary);font-size:.8rem;">— click one, then click a hex</span></h2>
+      <h2>Scenario cards <span style="font-weight:400;color:var(--text-secondary);font-size:.8rem;">— click one, then click a hex · <b>i</b> for the card back</span></h2>
+      <div class="chips" id="chips"></div>
       <div class="tray" id="tray"></div>
     </div>
   </div>
 
   <div class="roadmap hidden" id="roadmap"></div>
 
-  <p class="note">Prototype seeded with real Succession Dynamics card names and impact scores. Dials shown: Profitability, Harmony, Continuity, Readiness (cards may also carry Family / External / Communication impacts, shown on the card but not dialled in this demo).</p>
+  <p class="note">Full 60-card Succession Dynamics deck, 12 cards per challenge. Card colour identifies the challenge; difficulty is a 1–4 rating on each card back. All eight scored dimensions are tracked: Profitability, Continuity, External and Governance feed the business meter; Harmony, Family, Communication and Readiness feed the family meter.</p>
 </div>
 
+<div class="cmodal hidden" id="cardModal">
+  <div class="cm-card">
+    <div class="cm-head"><span class="cm-cat"></span><button class="cm-close" aria-label="Close">×</button></div>
+    <div class="cm-body">
+      <h3 class="cm-name"></h3>
+      <p class="cm-desc"></p>
+      <p class="cm-diff"></p>
+      <ul class="cm-im"></ul>
+    </div>
+  </div>
+</div>
+
+<script src="./cards.js"></script>
 <script src="./script.js"></script>
 </body>
 </html>
